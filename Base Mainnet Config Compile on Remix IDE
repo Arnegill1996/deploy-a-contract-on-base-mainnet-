@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.28;
+
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import {ERC20Pausable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+/**
+ * @title BaseMainnetToken
+ * @dev Optimized ERC20 token for Base Layer 2. Features minting, burning, and circuit-breaker pausing.
+ */
+contract BaseMainnetToken is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
+    
+    // Pass the initial owner address to the contract setup
+    constructor(address initialOwner) 
+        ERC20("Base Mainnet Token", "BMT") 
+        Ownable(initialOwner) 
+    {
+        // Mints 1,000,000 tokens immediately to the specified owner account
+        _mint(initialOwner, 1_000_000 * 10 ** decimals());
+    }
+
+    /**
+     * @notice Allows the contract owner to mint new tokens.
+     * @param to The receiving wallet address.
+     * @param amount The raw number of tokens to mint (including 18 decimals).
+     */
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
+
+    /**
+     * @notice Emergency stop mechanism. Pauses all token transfers.
+     */
+    function pause() public onlyOwner {
+        _pause();
+    }
+
+    /**
+     * @notice Resumes token transfers.
+     */
+    function unpause() public onlyOwner {
+        _unpause();
+    }
+
+    // Required overrides by Solidity when combining multiple OpenZeppelin extensions
+    function _update(address from, address to, uint256 value)
+        internal
+        override(ERC20, ERC20Pausable)
+    {
+        super._update(from, to, value);
+    }
+}
