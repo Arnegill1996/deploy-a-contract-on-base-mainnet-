@@ -1,0 +1,18 @@
+1.Prepare your Wallet: Make sure you have a Web3 wallet like Metamask or Coinbase Wallet installed and configured.
+
+2.Add Base: Add the Base Sepolia network (testnet) or Base (mainnet) to your wallet. 
+You can easily do this by visiting Chainlist and searching for Base.
+
+3.Get Funds: Go to a faucet (like the QuickNode Base Faucet or Base Sepolia Faucet) 
+and claim some testnet ETH to pay for your deployment gas fees.
+
+4.Write the Contract: Open Remix IDE and create your Solidity (.sol) file.
+
+5.Compile the Contract: Navigate to the Solidity Compiler tab on the left sidebar, 
+ensure your compiler version matches your contract, and click Compile.
+
+6.Deploy: Go to the Deploy & Run Transactions tab. Change the Environment dropdown to Injected Provider 
+(this connects your MetaMask or Coinbase Wallet).Ensure your wallet is set to the Base network, and click Deploy.
+
+7.Verify: Approve the transaction in your wallet. Once the transaction goes through, 
+you will see your deployed contract address and can view it on BaseScan.
